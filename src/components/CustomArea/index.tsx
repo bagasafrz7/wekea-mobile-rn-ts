@@ -9,7 +9,7 @@ interface CustomSafeAreaProps {
 export default function CustomSafeArea ({ children }: CustomSafeAreaProps) {
   return (
     <SafeAreaView style={GlobalStyles.safeAreaStyle}>
-        {children}
+      {children}
     </SafeAreaView>
   )
 }

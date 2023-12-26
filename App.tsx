@@ -1,13 +1,15 @@
 import React from 'react'
-import { SafeAreaView } from 'react-native'
-import GlobalStyles from './src/styles/GlobalStyles'
 import Routes from './src/routes'
+import CustomSafeArea from './src/components/CustomArea'
+import { PaperProvider } from 'react-native-paper'
 
 const App = () => {
   return (
-    <SafeAreaView style={GlobalStyles.safeAreaStyle}>
-      <Routes />
-    </SafeAreaView>
+    <CustomSafeArea>
+      <PaperProvider>
+        <Routes />
+      </PaperProvider>
+    </CustomSafeArea>
   )
 }
 
