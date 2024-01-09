@@ -1,6 +1,18 @@
 import React from 'react'
-import { Text, View } from 'react-native'
-import { Button, TextInput } from 'react-native-paper'
+import { StyleSheet, View, ScrollView } from 'react-native'
+import SearchBar from '../../../components/Global/SearchBar'
+import CustomCarousel from '../../../components/Home/CustomCarousel'
+import Category from '../../../components/Home/Category'
+import Promotion from '../../../components/Home/Promotion'
+import ProductList from '../../../components/Home/ProductList'
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    padding: 10,
+    gap: 10
+  }
+})
 
 interface HomeScreenProps {
   navigation: {
@@ -10,23 +22,21 @@ interface HomeScreenProps {
 
 function HomeScreen ({ navigation }: HomeScreenProps) {
   return (
-    <View style={{
-      flex: 1,
-      justifyContent: 'center',
-      gap: 20,
-      margin: 20
-    }}>
-      <Text>Home Screen</Text>
-      <TextInput
-        label="Email"
-      />
-      <Button
-        onPress={() => { navigation.navigate('Detail') }}
-        mode='contained'
-      >
-        Move to Detail Page
-      </Button>
+  <ScrollView>
+    <View style={styles.mainContainer}>
+      <SearchBar />
+      <CustomCarousel />
+      <Category />
+      <Promotion />
+      <ProductList />
     </View>
+
+    <View
+      style={{
+        marginTop: '20%'
+      }}
+    />
+  </ScrollView>
   )
 }
 
