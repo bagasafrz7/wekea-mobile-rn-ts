@@ -1,14 +1,34 @@
-import { Dimensions, Linking, Platform, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Dimensions, Linking, Platform, StyleSheet, Text, View, Image, Animated } from 'react-native'
+import React, { useRef } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import Carousel from 'react-native-reanimated-carousel'
 import { Card, IconButton } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
 
+const storeMarker = require('../../../../assets/icons/store-icon.png')
+
+interface MarkerData {
+  coordinate: { latitude: number, longitude: number }
+  title: string
+  address: string
+  image: string
+}
+
 export default function DiscoverScreen () {
   const width = Dimensions.get('window').width
 
-  const dataCarousel = [
+  const mapRef = useRef<null>(null)
+  const scrollCarouselRef = useRef<null>(null)
+  const mapAnimation = new Animated.Value(0)
+
+  const region = {
+    latitude: 37.7896386,
+    longitude: -122.421646,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421
+  }
+
+  const markers: MarkerData[] = [
     {
       coordinate: { latitude: 37.8025259, longitude: -122.4351431 },
       title: 'Wekea Drop Store',
@@ -35,36 +55,83 @@ export default function DiscoverScreen () {
     }
   ]
 
+  const onPressMarker = (mapData: any) => {
+    const markerId = mapData._targetInst.return.key
+
+    if (scrollCarouselRef.current) {
+      scrollCarouselRef.current.scrollTo({ index: +markerId, animated: true })
+    }
+  }
+
+  const interpolations = markers.map((_, index) => {
+    const inputRange = [
+      (index - 1) * width,
+      index * width,
+      (index + 1) * width
+    ]
+
+    const scale = mapAnimation.interpolate({
+      inputRange,
+      outputRange: [1, 1.5, 1],
+      extrapolate: 'clamp'
+    })
+
+    return { scale }
+  })
+
   return (
     <View style={StyleSheet.absoluteFillObject}>
       <MapView
-        initialRegion={{
-          latitude: -6.2232038,
-          longitude: 106.6402799,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
-        }}
+        ref={mapRef}
+        initialRegion={region}
         style={StyleSheet.absoluteFillObject}
       >
-        <Marker
-          coordinate={{
-            latitude: -6.2232038,
-            longitude: 106.6402799
-          }}
-          title="Lokasi Marker"
-          description="Ini adalah lokasi yang Anda tentukan"
-        />
+        {
+          markers.map((marker, index) => (
+            <Marker
+              key={index}
+              coordinate={marker.coordinate}
+              title={marker.title}
+              description={marker.address}
+              onPress={(e) => { onPressMarker(e) }}
+            >
+              <Animated.Image
+                source={storeMarker}
+                style={{
+                  transform: [
+                    {
+                      scale: interpolations[index].scale
+                    }
+                  ]
+                }}
+              />
+            </Marker>
+          ))
+        }
       </MapView>
       <View style={{ alignItems: 'center' }}>
         <Carousel
+          ref={scrollCarouselRef}
           style={{
             top: 20
           }}
           loop={false}
           width={width - 30}
           height={250}
-          data={dataCarousel}
+          data={markers}
           scrollAnimationDuration={500}
+          onProgressChange={(progess) => {
+            mapAnimation.setValue(Math.abs(progess))
+          }}
+          onSnapToItem={(index) => {
+            const { coordinate } = markers[index]
+
+            mapRef.current.animateToRegion({
+              ...coordinate,
+              latitudeDelta: region.latitudeDelta,
+              longitudeDelta: region.longitudeDelta
+            })
+          }}
           renderItem={({ item }) => (
             <Card
               style={{
@@ -90,7 +157,7 @@ export default function DiscoverScreen () {
                   <Text
                     style={{
                       fontSize: 18,
-                      fontFamily: '500'
+                      fontWeight: '500'
                     }}
                   >{item.title}</Text>
                   <Text>{item.address}</Text>
