@@ -1,9 +1,9 @@
 import { Dimensions, Linking, Platform, StyleSheet, Text, View, Image, Animated } from 'react-native'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import Carousel from 'react-native-reanimated-carousel'
 import { Card, IconButton } from 'react-native-paper'
-import Icon from 'react-native-vector-icons/Ionicons'
+import CarouselDiscover from '../../../components/Discover/CarouselDiscover'
 
 const storeMarker = require('../../../../assets/icons/store-icon.png')
 
@@ -20,6 +20,9 @@ export default function DiscoverScreen () {
   const mapRef = useRef<null>(null)
   const scrollCarouselRef = useRef<null>(null)
   const mapAnimation = new Animated.Value(0)
+  const carouselAnimation = new Animated.Value(0)
+  const carouselAnimationRef = useRef<number | any>(carouselAnimation)
+  const [isShowCarousel, setIsShowCarousel] = useState<boolean>(false)
 
   const region = {
     latitude: 37.7896386,
@@ -56,6 +59,13 @@ export default function DiscoverScreen () {
   ]
 
   const onPressMarker = (mapData: any) => {
+    setIsShowCarousel(true)
+    Animated.timing(carouselAnimationRef.current, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: true
+    }).start()
+
     const markerId = mapData._targetInst.return.key
 
     if (scrollCarouselRef.current) {
@@ -78,6 +88,21 @@ export default function DiscoverScreen () {
 
     return { scale }
   })
+
+  const carouselInterpolate = carouselAnimationRef.current.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -1000],
+    extrapolate: 'clamp'
+  })
+
+  const onHideCarousel = () => {
+    setIsShowCarousel((prev) => !prev)
+    Animated.timing(carouselAnimationRef.current, {
+      toValue: isShowCarousel ? 1 : 0,
+      duration: 1000,
+      useNativeDriver: true
+    }).start()
+  }
 
   return (
     <View style={StyleSheet.absoluteFillObject}>
@@ -109,71 +134,39 @@ export default function DiscoverScreen () {
           ))
         }
       </MapView>
-      <View style={{ alignItems: 'center' }}>
-        <Carousel
-          ref={scrollCarouselRef}
-          style={{
-            top: 20
-          }}
-          loop={false}
-          width={width - 30}
-          height={250}
-          data={markers}
-          scrollAnimationDuration={500}
-          onProgressChange={(progess) => {
-            mapAnimation.setValue(Math.abs(progess))
-          }}
-          onSnapToItem={(index) => {
-            const { coordinate } = markers[index]
 
-            mapRef.current.animateToRegion({
-              ...coordinate,
-              latitudeDelta: region.latitudeDelta,
-              longitudeDelta: region.longitudeDelta
-            })
+      <View
+        style={{
+          alignItems: 'flex-end'
+        }}
+      >
+        <IconButton
+          style={{
+            backgroundColor: '#fff'
           }}
-          renderItem={({ item }) => (
-            <Card
-              style={{
-                overflow: 'hidden'
-              }}
-            >
-              <Card.Cover
-                source={{ uri: item.image }}
-                style={{
-                  height: 150,
-                  borderRadius: 0
-                }}
-              />
-              <Card.Content
-                style={{
-                  padding: 16,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: '500'
-                    }}
-                  >{item.title}</Text>
-                  <Text>{item.address}</Text>
-                </View>
-                <IconButton
-                  mode="outlined"
-                  onPress={() =>
-                    Linking.openURL(Platform.OS === 'ios' ? `maps://app?daddr=${item.coordinate.latitude},${item.coordinate.longitude}` : `google.navigation:q=${item.coordinate.latitude},${item.coordinate.longitude}`)
-                  }
-                  icon={() => <Icon size={24} name="locate" /> }
-                />
-              </Card.Content>
-            </Card>
-          )}
+          mode="contained"
+          onPress={onHideCarousel}
+          icon={ isShowCarousel ? 'close' : 'menu' }
         />
       </View>
+
+      <Animated.View
+        style={{
+          alignItems: 'center',
+          transform: [{
+            translateY: carouselInterpolate
+          }]
+        }}
+      >
+        <CarouselDiscover
+          scrollCarouselRef={scrollCarouselRef}
+          width={width}
+          markers={markers}
+          mapAnimation={mapAnimation}
+          mapRef={mapRef}
+          region={region}
+        />
+      </Animated.View>
     </View>
   )
 }
