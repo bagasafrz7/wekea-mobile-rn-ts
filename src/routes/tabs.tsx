@@ -1,7 +1,7 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeScreen from '../view/screens/home/HomeScreen'
-import FavoriteScreen from '../view/screens/home/FavoriteScreen'
+import CartScreen from '../view/screens/home/CartScreen'
 import Icon from 'react-native-vector-icons/Ionicons'
 import DiscoverScreen from '../view/screens/home/DiscoverScreen'
 
@@ -51,11 +51,11 @@ export default function HomeTabs () {
       />
       <Tabs.Screen
         name='Favorite'
-        component={FavoriteScreen}
+        component={CartScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
-              name={focused ? 'heart' : 'heart-outline'}
+              name={focused ? 'cart' : 'cart-outline'}
               size={size}
               color={color}
             />
