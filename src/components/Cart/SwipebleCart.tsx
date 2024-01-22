@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
-import Animated, { SlideOutLeft } from 'react-native-reanimated'
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { Swipeable } from 'react-native-gesture-handler'
 import { IconButton } from 'react-native-paper'
 import { CartItem } from './CartItem'
@@ -17,13 +17,25 @@ const styles = StyleSheet.create({
 })
 
 export default function SwipebleCart ({ item, index, data, setData, handleDelete }: any) {
+  const itemHeight = useSharedValue(100)
+  const rCartContainerStyle = useAnimatedStyle(() => ({
+    height: itemHeight.value
+  }))
+
   return (
-  <Animated.View exiting={SlideOutLeft.duration(1000)}>
-    <Swipeable renderRightActions={() => <View style={styles.cartTrashButton}>
+  <Animated.View style={rCartContainerStyle}>
+    <Swipeable
+      onSwipeableOpen={() => {
+        itemHeight.value = withTiming(0)
+        setTimeout(() => {
+          handleDelete(item.id)
+        }, 300)
+      }}
+      renderRightActions={() => <View style={styles.cartTrashButton}
+    >
       <IconButton
         icon='delete'
         size={24}
-        onPress={() => handleDelete(item.id)}
       />
       </View> }
     >
