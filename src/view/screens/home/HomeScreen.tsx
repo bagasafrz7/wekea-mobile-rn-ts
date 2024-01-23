@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     padding: 10,
-    gap: 10
+    gap: 15
   }
 })
 
@@ -24,7 +24,7 @@ function HomeScreen ({ navigation }: HomeScreenProps) {
   return (
   <ScrollView>
     <View style={styles.mainContainer}>
-      <SearchBar />
+      <SearchBar isHasButton />
       <CustomCarousel />
       <Category />
       <Promotion />

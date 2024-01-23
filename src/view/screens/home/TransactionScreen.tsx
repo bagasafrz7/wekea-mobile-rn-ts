@@ -1,13 +1,12 @@
 import { View, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
-import { Searchbar } from 'react-native-paper'
 import TransactionContainer from '../../../components/Transaction/TransactionContainer'
+import SearchBar from '../../../components/Global/SearchBar'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 20,
-    marginVertical: 20
+    padding: 10
   },
   searchbar: {
     backgroundColor: 'white'
@@ -69,18 +68,11 @@ export default function TransactionScreen () {
 
   return (
     <View style={styles.container}>
-      <Searchbar
-        placeholder='Mau cari apa?'
-        theme={{
-          roundness: 2
-        }}
-        value=''
-        style={styles.searchbar}
-      />
+      <SearchBar />
 
       <FlatList
         style={{
-          marginTop: 20
+          marginTop: 15
         }}
         data={data}
         renderItem={({ item }) => <TransactionContainer data={item} /> }

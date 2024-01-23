@@ -1,12 +1,12 @@
-import { View, TextInput, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { IconButton } from 'react-native-paper'
+import { IconButton, Searchbar as Search, TouchableRipple } from 'react-native-paper'
 
 const styles = StyleSheet.create({
   searchBarContainer: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'stretch',
+    gap: 10
   },
   searchBar: {
     flexDirection: 'row',
@@ -16,32 +16,33 @@ const styles = StyleSheet.create({
     gap: 10,
     flex: 1
   },
-  borderShadow: {
-    borderRadius: 100,
-    shadowColor: 'gray',
-    shadowOffset: {
-      width: 2,
-      height: 1
-    },
-    shadowOpacity: 5,
-    shadowRadius: 2,
-    elevation: 5,
-    borderTopWidth: 0,
-    borderLeftWidth: 0.2,
-    backgroundColor: '#f5f5f5'
+  inputWrapper: {
+    backgroundColor: '#fff',
+    borderRadius: 10
+  },
+  searchbar: {
+    backgroundColor: 'white'
   }
 })
 
-export default function SearchBar () {
+export default function SearchBar ({ isHasButton }: any) {
   return (
     <View style={styles.searchBarContainer}>
-      <View style={[styles.searchBar, styles.borderShadow]}>
-        <Icon name='search' size={12} />
-        <TextInput
-          placeholder='Mau cari barang apa?'
-        />
-      </View>
-      <IconButton icon='menu' />
+      <Search
+        placeholder='Mau cari apa?'
+        theme={{
+          roundness: 2
+        }}
+        value=''
+        style={[styles.inputWrapper, { flex: 1 }]}
+      />
+      {
+        isHasButton && (
+          <TouchableRipple style={[styles.inputWrapper, { justifyContent: 'center' }]}>
+            <IconButton icon='menu' />
+          </TouchableRipple>
+        )
+      }
     </View>
   )
 }
