@@ -4,6 +4,7 @@ import HomeScreen from '../view/screens/home/HomeScreen'
 import CartScreen from '../view/screens/home/CartScreen'
 import Icon from 'react-native-vector-icons/Ionicons'
 import DiscoverScreen from '../view/screens/home/DiscoverScreen'
+import TransactionScreen from '../view/screens/home/TransactionScreen'
 
 const Tabs = createBottomTabNavigator()
 
@@ -56,6 +57,19 @@ export default function HomeTabs () {
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
               name={focused ? 'cart' : 'cart-outline'}
+              size={size}
+              color={color}
+            />
+          )
+        }}
+      />
+      <Tabs.Screen
+        name='Transaction'
+        component={TransactionScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Icon
+              name={focused ? 'receipt' : 'receipt-outline'}
               size={size}
               color={color}
             />
