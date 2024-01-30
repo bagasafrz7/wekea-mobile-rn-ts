@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React, { useMemo, useState } from 'react'
-import GlobalStyles from '../../../styles/GlobalStyles'
 import { FlatList } from 'react-native-gesture-handler'
 import { Button } from 'react-native-paper'
 import SwipebleCart from '../../../components/Cart/SwipebleCart'
+import Container from '../../../components/Global/Container'
+import Typography from '../../../components/Global/Typography'
 
 const styles = StyleSheet.create({
   cartItem: {
@@ -104,20 +105,10 @@ export default function CartScreen () {
   }
 
   return (
-    <View
-      style={{
-        flex: 1
-      }}
-    >
-      <Text
-        style={{
-          ...GlobalStyles.largeFont,
-          marginVertical: 10,
-          marginHorizontal: 20
-        }}
-      >
-        Cart
-      </Text>
+    <Container>
+      <Typography size='lg' weight='bold'>
+      Typography
+      </Typography>
 
       <FlatList
         data={data}
@@ -132,6 +123,6 @@ export default function CartScreen () {
           Checkout&nbsp; ${totalPrice}
         </Button>
       </View>
-    </View>
+    </Container>
   )
 }

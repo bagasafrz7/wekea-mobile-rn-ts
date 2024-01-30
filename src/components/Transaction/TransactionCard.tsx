@@ -1,5 +1,6 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet } from 'react-native'
 import React from 'react'
+import Typography from '../Global/Typography'
 
 const styles = StyleSheet.create({
   transactionBody: {
@@ -39,23 +40,23 @@ export default function TransactionCard ({ item }: any) {
       <View style={styles.transactionBodyLeft}>
         <Image source={{ uri: item.image }} style={styles.transactionBodyImage} />
         <View style={styles.transactionBodyText}>
-          <Text style={styles.transactionBodyTextTitle}>
+          <Typography size='md' weight='bold'>
             {item.name}
-          </Text>
+          </Typography>
 
-          <Text style={styles.transactionBodyTextDesc}>
+          <Typography size='sm' weight='normal'>
             Qty: {item.qty}
-          </Text>
+          </Typography>
         </View>
       </View>
-      <Text>
+      <Typography size='md' weight='bold'>
         {
           new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR'
           }).format(item.price)
         }
-      </Text>
+      </Typography>
     </View>
   )
 }

@@ -1,7 +1,8 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native'
+import { View, ScrollView, StyleSheet } from 'react-native'
 import React from 'react'
 import { IconButton } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
+import Typography from '../Global/Typography'
 
 const styles = StyleSheet.create({
   iconButton: {
@@ -29,13 +30,9 @@ export default function Category () {
                   }}
                 >
                   <Icon name='home-outline' size={size} color={color} />
-                  <Text
-                    style={{
-                      fontSize: 12
-                    }}
-                  >
+                  <Typography size='sm'>
                     Home
-                  </Text>
+                  </Typography>
                 </View>
               }
               style={styles.iconButton}

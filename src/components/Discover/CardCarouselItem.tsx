@@ -1,7 +1,8 @@
-import { View, Text, Linking, Platform } from 'react-native'
+import { View, Linking, Platform } from 'react-native'
 import React from 'react'
 import { Card, IconButton } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
+import Typography from '../Global/Typography'
 
 interface MarkerData {
   coordinate: { latitude: number, longitude: number }
@@ -39,13 +40,8 @@ export default function CardCarouselItem (props: CardCarouselItemProps) {
         }}
       >
         <View>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: '500'
-            }}
-          >{item.title}</Text>
-          <Text>{item.address}</Text>
+          <Typography size='lg' weight='bold'>{item.title}</Typography>
+          <Typography size='md' weight='normal'>{item.address}</Typography>
         </View>
         <IconButton
           mode="outlined"

@@ -1,8 +1,7 @@
-import { Dimensions, Linking, Platform, StyleSheet, Text, View, Image, Animated } from 'react-native'
+import { Dimensions, StyleSheet, View, Image, Animated } from 'react-native'
 import React, { useRef, useState } from 'react'
 import MapView, { Marker } from 'react-native-maps'
-import Carousel from 'react-native-reanimated-carousel'
-import { Card, IconButton } from 'react-native-paper'
+import { IconButton } from 'react-native-paper'
 import CarouselDiscover from '../../../components/Discover/CarouselDiscover'
 
 const storeMarker = require('../../../../assets/icons/store-icon.png')

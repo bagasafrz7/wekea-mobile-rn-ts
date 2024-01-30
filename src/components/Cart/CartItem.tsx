@@ -1,12 +1,11 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet } from 'react-native'
 import React from 'react'
 import { IconButton, List } from 'react-native-paper'
-import GlobalStyles from '../../styles/GlobalStyles'
+import Typography from '../Global/Typography'
 
 const styles = StyleSheet.create({
   cartItem: {
-    marginHorizontal: 20,
-    backgroundColor: '#ECECED',
+    backgroundColor: '#fff',
     padding: 10,
     borderRadius: 10,
     marginVertical: 10
@@ -53,8 +52,15 @@ export function CartItem ({ item, index, data, setData }: any) {
         return <View style={styles.cartItemLeft}>
           <Image source={{ uri: item.image }} style={styles.cartItemImg} />
           <View>
-            <Text style={GlobalStyles.mediumFont}>{item.name}</Text>
-            <Text style={GlobalStyles.regularFont}>{`$ ${item.price}`}</Text>
+            <Typography size='lg' weight='medium'>{item.name}</Typography>
+            <Typography size='md' weight='normal'>
+              {
+                new Intl.NumberFormat('id-ID', {
+                  style: 'currency',
+                  currency: 'IDR'
+                }).format(item.price)
+              }
+            </Typography>
           </View>
         </View>
       }}
@@ -65,7 +71,7 @@ export function CartItem ({ item, index, data, setData }: any) {
             size={14}
             onPress={() => qtyHandler('increment')}
           />
-          <Text>{item.quantity}</Text>
+          <Typography size='md' weight='normal'>{item.quantity}</Typography>
           <IconButton
             icon='minus'
             size={14}

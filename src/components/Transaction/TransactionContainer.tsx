@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import { Divider } from 'react-native-paper'
 import Badge from '../Global/Badge'
 import Button from '../Global/Button'
 import TransactionCard from './TransactionCard'
+import Typography from '../Global/Typography'
 
 const styles = StyleSheet.create({
   transactionContainer: {
@@ -58,7 +59,7 @@ export default function TransactionContainer ({ data }: any) {
   return (
     <View style={styles.transactionContainer}>
       <View style={styles.transactionHeader}>
-        <Text style={styles.transactionDate}>{data.date}</Text>
+        <Typography size='sm' weight='normal'>{data.date}</Typography>
         <Badge label='Sedang dikirim' variant='warning' mode='contained' />
       </View>
 

@@ -1,5 +1,6 @@
-import { View, Text, FlatList, Pressable, Image, StyleSheet } from 'react-native'
+import { View, FlatList, Pressable, Image, StyleSheet } from 'react-native'
 import React from 'react'
+import Typography from '../Global/Typography'
 
 const promoImg = require('../../../assets/promo/1.jpg')
 
@@ -25,11 +26,9 @@ const styles = StyleSheet.create({
 export default function Promotion () {
   return (
     <View>
-      <Text
-        style={styles.titlePopular}
-      >
+      <Typography size='lg' weight='bold'>
         Promosi Minggu Ini
-      </Text>
+      </Typography>
 
       <FlatList
         style={{

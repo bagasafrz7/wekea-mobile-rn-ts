@@ -1,17 +1,8 @@
-import { View, StyleSheet, FlatList } from 'react-native'
+import { FlatList } from 'react-native'
 import React from 'react'
 import TransactionContainer from '../../../components/Transaction/TransactionContainer'
 import SearchBar from '../../../components/Global/SearchBar'
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10
-  },
-  searchbar: {
-    backgroundColor: 'white'
-  }
-})
+import Container from '../../../components/Global/Container'
 
 export default function TransactionScreen () {
   const data = [
@@ -67,16 +58,13 @@ export default function TransactionScreen () {
   ]
 
   return (
-    <View style={styles.container}>
+    <Container>
       <SearchBar />
 
       <FlatList
-        style={{
-          marginTop: 15
-        }}
         data={data}
         renderItem={({ item }) => <TransactionContainer data={item} /> }
       />
-    </View>
+    </Container>
   )
 }
