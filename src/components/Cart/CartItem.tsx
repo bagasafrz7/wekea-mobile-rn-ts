@@ -1,5 +1,5 @@
-import { View, Image, StyleSheet } from 'react-native'
 import React from 'react'
+import { Image, StyleSheet, View } from 'react-native'
 import { IconButton, List } from 'react-native-paper'
 import Typography from '../Global/Typography'
 

@@ -1,5 +1,6 @@
-import { View, ScrollView, StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { Card } from 'react-native-paper'
 import Typography from '../Global/Typography'
 
@@ -27,6 +28,8 @@ const styles = StyleSheet.create({
 })
 
 export default function ProductList () {
+  const navigation = useNavigation()
+
   return (
     <View>
     <Typography size='lg' weight='bold'>
@@ -44,6 +47,9 @@ export default function ProductList () {
           <Card
             key={index}
             style={styles.cardProduct}
+            onPress={() => {
+              navigation.navigate('Detail')
+            }}
           >
             <Card.Cover
               source={furnitureImg}
