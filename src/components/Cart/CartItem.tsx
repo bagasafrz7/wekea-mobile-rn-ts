@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 import { IconButton, List } from 'react-native-paper'
+import { priceFormating } from '../../utils/helpers/priceFormating'
 import Typography from '../Global/Typography'
 
 const styles = StyleSheet.create({
@@ -54,12 +55,7 @@ export function CartItem ({ item, index, data, setData }: any) {
           <View>
             <Typography size='lg' weight='medium'>{item.name}</Typography>
             <Typography size='md' weight='normal'>
-              {
-                new Intl.NumberFormat('id-ID', {
-                  style: 'currency',
-                  currency: 'IDR'
-                }).format(item.price)
-              }
+              {priceFormating(item.price)}
             </Typography>
           </View>
         </View>
