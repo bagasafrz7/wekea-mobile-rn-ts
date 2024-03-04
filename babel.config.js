@@ -11,9 +11,20 @@ module.exports = function (api) {
       [
         'module-resolver',
         {
-          extensions: ['.tsx', '.ts', '.js', '.json']
+          root: ['.'],
+          extensions: ['.tsx', '.ts', '.js', '.json'],
+          alias: {
+            '@components': './src/components',
+            '@assets': './assets',
+            '@utils': './src/utils',
+            '@constants': './src/constants',
+            '@views': './src/views',
+            '@styles': './src/styles',
+            '@routes': './src/routes'
+          }
         }
       ],
+      'react-native-paper/babel',
       'react-native-reanimated/plugin'
     ]
   }
