@@ -1,5 +1,6 @@
-import { View, StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
+import { StyleSheet, View } from 'react-native'
 import { IconButton, Searchbar as Search, TouchableRipple } from 'react-native-paper'
 
 const styles = StyleSheet.create({
@@ -26,6 +27,8 @@ const styles = StyleSheet.create({
 })
 
 export default function SearchBar ({ isHasButton }: any) {
+  const navigation = useNavigation()
+
   return (
     <View style={styles.searchBarContainer}>
       <Search
@@ -38,7 +41,10 @@ export default function SearchBar ({ isHasButton }: any) {
       />
       {
         isHasButton && (
-          <TouchableRipple style={[styles.inputWrapper, { justifyContent: 'center' }]}>
+          <TouchableRipple
+            onPress={() => navigation.navigate('Menu')}
+            style={[styles.inputWrapper, { justifyContent: 'center' }]}
+          >
             <IconButton icon='menu' />
           </TouchableRipple>
         )
