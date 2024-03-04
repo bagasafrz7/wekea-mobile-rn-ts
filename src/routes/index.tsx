@@ -1,12 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { IconButton } from 'react-native-paper'
+import DetailScreen from 'src/view/screens/detail/DetailScreen'
 import MenuScreen from 'src/view/screens/menu/MenuScreen'
-import DetailScreen from '../view/screens/detail/DetailScreen'
+import EditProfileScreen from 'src/view/screens/profile/EditProfileScreen'
+import ProfileScreen from 'src/view/screens/profile/ProfileScreen'
 import HomeTabs from './tabs'
 
-const Stack = createNativeStackNavigator()
+const Stack = createStackNavigator()
 
 export default function Routes () {
   return (
@@ -16,22 +18,48 @@ export default function Routes () {
           headerShown: false
         }}
       >
-        <Stack.Screen name='Main' component={HomeTabs} />
-        <Stack.Screen name='Detail' component={DetailScreen} />
-        <Stack.Screen
-          name='Menu'
-          options={({ navigation }) => ({
-            presentation: 'modal',
+        <Stack.Group>
+          <Stack.Screen name='Main' component={HomeTabs} />
+          <Stack.Screen name='Detail' component={DetailScreen} />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen
+            name='Menu'
+            options={({ navigation }) => ({
+              headerShown: true,
+              title: 'Halaman Menu',
+              headerLeft: () => (
+                <IconButton
+                  icon='close'
+                  onPress={() => navigation.goBack()}
+                />
+              )
+            })}
+          component={MenuScreen} />
+        </Stack.Group>
+        <Stack.Group
+          screenOptions={({ navigation }) => ({
             headerShown: true,
-            title: 'Halaman Menu',
-            headerRight: () => (
-              <IconButton
-                icon='close'
-                onPress={() => navigation.goBack()}
-              />
+            headerLeft: () => (
+                <IconButton
+                  icon='arrow-left'
+                  onPress={() => navigation.goBack()}
+                />
             )
           })}
-        component={MenuScreen} />
+        >
+          <Stack.Screen
+            name='Profile'
+            component={ProfileScreen}
+          />
+          <Stack.Screen
+            name='EditProfile'
+            options={() => ({
+              title: 'Edit Profile'
+            })}
+            component={EditProfileScreen}
+          />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   )

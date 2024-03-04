@@ -3,7 +3,7 @@ import { HStack } from '@components/Global/HStack'
 import Typography from '@components/Global/Typography'
 import { VStack } from '@components/Global/VStack'
 import React from 'react'
-import { ScrollView } from 'react-native'
+import { Pressable, ScrollView } from 'react-native'
 import { Avatar, List } from 'react-native-paper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { menuData } from 'src/const/MenuScreen'
@@ -16,26 +16,30 @@ const MenuItems = styled.View`
   gap: 10px;
 `
 
-export default function MenuScreen () {
+export default function MenuScreen ({ navigation }: any) {
   return (
     <ScrollView>
       <Container bgColor="#fff">
-        <HStack justify='space-between' align='center'>
-          <HStack gap="10px" align="center">
-            <Avatar.Image size={50} source={{ uri: 'http://picsum.photos/700' }} />
+        <Pressable
+          onPress={() => navigation.navigate('Profile')}
+        >
+          <HStack justify='space-between' align='center'>
+            <HStack gap="10px" align="center">
+              <Avatar.Image size={50} source={{ uri: 'http://picsum.photos/700' }} />
 
-            <VStack>
-              <Typography size="lg" weight="bold">
-                Jhon Dee
-              </Typography>
-              <Typography size="sm" color="secondary">
-                Tangerang, Indonesia
-              </Typography>
-            </VStack>
+              <VStack>
+                <Typography size="lg" weight="bold">
+                  Jhon Dee
+                </Typography>
+                <Typography size="sm" color="secondary">
+                  Tangerang, Indonesia
+                </Typography>
+              </VStack>
+            </HStack>
+
+            <Ionicons name="settings-outline" size={18} color="black" />
           </HStack>
-
-          <Ionicons name="settings-outline" size={18} color="black" />
-        </HStack>
+        </Pressable>
 
         {
           menuData.map((menu, index) => (
